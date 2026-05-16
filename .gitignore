@@ -2,7 +2,7 @@
 /.nymph-module-version
 /bin/
 /venv/
-/trainer/
+/backend/
 /sources/*.sources.json
 /datasets/
 /jobs/
