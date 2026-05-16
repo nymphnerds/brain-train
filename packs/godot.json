@@ -1,0 +1,8 @@
+{
+  "id": "godot",
+  "label": "Godot",
+  "summary": "Godot GDScript/C# project conventions.",
+  "include_extensions": [".gd", ".cs", ".tscn", ".tres", ".json", ".md", ".txt"],
+  "ignore_directories": [".godot", ".import", "bin", "obj"],
+  "system_prompt": "You are a local Godot coding assistant. Prefer project conventions and explain scene/script relationships clearly."
+}

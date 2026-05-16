@@ -1,0 +1,148 @@
+{
+  "manifest_version": 1,
+  "id": "brain-train",
+  "name": "Brain Trainer",
+  "short_name": "BT",
+  "version": "0.1.0",
+  "description": "Local LoRA/QLoRA trainer for Brain coding and game-development adapters.",
+  "category": "training",
+  "packaging": "repo",
+  "repo": {
+    "url": "https://github.com/nymphnerds/brain-train.git",
+    "branch": "main"
+  },
+  "source": {
+    "type": "repo",
+    "repo": "https://github.com/nymphnerds/brain-train.git",
+    "ref": "main"
+  },
+  "overview": {
+    "body": "Brain Trainer is the planned local LLM adapter trainer for Brain. It will turn selected codebases, docs, and game-engine project material into reviewed datasets, train LoRA/QLoRA adapters, and link finished adapters back into Brain.\n\nThe first milestone is dataset building and review. Training backend integration will come after the dataset workflow is proven.",
+    "works_with": [
+      "Nymphs Brain local LLM stack",
+      "Game-development codebases",
+      "Unity, Unreal, Godot, Blender, and NymphsCore module workflows"
+    ],
+    "requirements": [
+      "Managed NymphsCore WSL distro",
+      "Nymphs Brain installed for model/runtime integration",
+      "CUDA-capable NVIDIA GPU for local training once backend support lands",
+      "Python 3 with venv"
+    ],
+    "links": [
+      {
+        "label": "Brain module source",
+        "url": "https://github.com/nymphnerds/brain"
+      },
+      {
+        "label": "LoRA module source",
+        "url": "https://github.com/nymphnerds/lora"
+      }
+    ]
+  },
+  "install": {
+    "root": "$HOME/Brain-Trainer",
+    "entrypoint": "scripts/install_brain_trainer.sh",
+    "version_marker": "$HOME/Brain-Trainer/.nymph-module-version",
+    "installed_markers": [
+      "$HOME/Brain-Trainer/.nymph-module-version"
+    ]
+  },
+  "artifacts": {
+    "install_root": "$HOME/Brain-Trainer",
+    "sources_root": "$HOME/Brain-Trainer/sources",
+    "datasets_root": "$HOME/Brain-Trainer/datasets",
+    "jobs_root": "$HOME/Brain-Trainer/jobs",
+    "adapters_root": "$HOME/Brain-Trainer/adapters",
+    "indexes_root": "$HOME/Brain-Trainer/indexes",
+    "config_root": "$HOME/Brain-Trainer/config",
+    "logs_root": "$HOME/Brain-Trainer/logs"
+  },
+  "entrypoints": {
+    "install": "scripts/install_brain_trainer.sh",
+    "update": "scripts/brain_trainer_update.sh",
+    "status": "scripts/brain_trainer_status.sh",
+    "open_trainer": "scripts/brain_trainer_open.sh",
+    "open_sources": "scripts/brain_trainer_open_sources.sh",
+    "open_datasets": "scripts/brain_trainer_open_datasets.sh",
+    "open_adapters": "scripts/brain_trainer_open_adapters.sh",
+    "build_dataset": "scripts/brain_trainer_build_dataset.sh",
+    "job_status": "scripts/brain_trainer_job_status.sh",
+    "logs": "scripts/brain_trainer_logs.sh",
+    "uninstall": "scripts/brain_trainer_uninstall.sh"
+  },
+  "ui": {
+    "sort_order": 35,
+    "standard_lifecycle_rail": true,
+    "manager_ui": {
+      "type": "local_html",
+      "title": "Brain Trainer",
+      "entrypoint": "ui/manager.html"
+    },
+    "manager_actions": [
+      {
+        "id": "open_trainer",
+        "label": "Brain Trainer",
+        "entrypoint": "open_trainer",
+        "result": "open_module_ui"
+      },
+      {
+        "id": "open_sources",
+        "label": "Open Sources",
+        "entrypoint": "open_sources",
+        "result": "open_directory"
+      },
+      {
+        "id": "open_datasets",
+        "label": "Open Datasets",
+        "entrypoint": "open_datasets",
+        "result": "open_directory"
+      },
+      {
+        "id": "open_adapters",
+        "label": "Open Adapters",
+        "entrypoint": "open_adapters",
+        "result": "open_directory"
+      },
+      {
+        "id": "logs",
+        "label": "Logs",
+        "entrypoint": "logs",
+        "result": "open_notepad"
+      }
+    ]
+  },
+  "uninstall": {
+    "supports_purge": true,
+    "supports_data_delete": true,
+    "requires_confirmation": true,
+    "dry_run_arg": "--dry-run",
+    "confirm_arg": "--yes",
+    "purge_arg": "--purge",
+    "data_only_arg": "--data-only",
+    "preserve_by_default": [
+      "sources",
+      "datasets",
+      "jobs",
+      "adapters",
+      "indexes",
+      "config",
+      "logs"
+    ],
+    "removes_by_default": [
+      "bin",
+      "venv",
+      "trainer"
+    ]
+  },
+  "dependencies": {
+    "python": "3.x with venv",
+    "brain": "Nymphs Brain module for model/runtime integration",
+    "trainer_backend": "Planned: Axolotl first, with Unsloth/TRL candidates later"
+  },
+  "notes": [
+    "Brain Trainer is a future training module skeleton.",
+    "The first real milestone is source scanning and reviewed dataset generation.",
+    "Do not commit datasets, generated examples, jobs, adapters, indexes, model files, venvs, logs, secrets, or downloaded trainer backends."
+  ]
+}

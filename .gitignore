@@ -1,0 +1,21 @@
+# Runtime/install state
+/.nymph-module-version
+/bin/
+/venv/
+/trainer/
+/sources/*.sources.json
+/datasets/
+/jobs/
+/adapters/
+/indexes/
+/config/
+/logs/
+
+# Python/cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# OS/editor
+.DS_Store
+Thumbs.db

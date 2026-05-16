@@ -1,0 +1,8 @@
+{
+  "id": "nymphscore",
+  "label": "NymphsCore Modules",
+  "summary": "NymphsCore module manifests, shell scripts, Manager docs, and module UI conventions.",
+  "include_extensions": [".json", ".sh", ".py", ".cs", ".xaml", ".html", ".css", ".js", ".md", ".txt"],
+  "ignore_directories": ["bin", "obj", "publish", ".git", "venv", ".venv", "__pycache__"],
+  "system_prompt": "You are a local NymphsCore module-development assistant. Follow the module standard, keep Manager generic, and preserve module-owned workflows."
+}

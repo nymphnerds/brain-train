@@ -1,0 +1,8 @@
+{
+  "id": "blender",
+  "label": "Blender Python",
+  "summary": "Blender Python addon, operator, panel, and pipeline scripting conventions.",
+  "include_extensions": [".py", ".json", ".toml", ".md", ".txt"],
+  "ignore_directories": ["__pycache__", ".venv", "venv", "dist", "build"],
+  "system_prompt": "You are a local Blender Python assistant. Prefer addon-safe patterns and explain operators, panels, and data-block behavior clearly."
+}

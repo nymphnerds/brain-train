@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brain Trainer</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07110f;
+      --panel: rgba(18, 25, 24, 0.92);
+      --panel-2: rgba(10, 18, 17, 0.94);
+      --line: rgba(82, 230, 217, 0.22);
+      --cyan: #26e7ff;
+      --green: #91ff42;
+      --mint: #5de26d;
+      --text: #f5fff9;
+      --muted: #9ba7a6;
+      --warn: #ffcc40;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        linear-gradient(90deg, rgba(42, 255, 199, 0.05) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(42, 255, 199, 0.04) 1px, transparent 1px),
+        var(--bg);
+      background-size: 42px 42px;
+      font-size: 16px;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 42px;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .badge {
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--cyan);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: var(--cyan);
+      font-family: Consolas, monospace;
+      font-weight: 800;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 18px;
+      color: var(--cyan);
+      font-family: Consolas, monospace;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .status-chip {
+      color: var(--green);
+      font-family: Consolas, monospace;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 12px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    section,
+    aside {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      min-width: 0;
+    }
+
+    .builder {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 16px;
+      min-height: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) 190px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    label {
+      font-weight: 700;
+    }
+
+    input,
+    select {
+      width: 100%;
+      height: 44px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      background: #101211;
+      color: var(--text);
+      padding: 0 12px;
+      font: inherit;
+    }
+
+    button {
+      min-height: 42px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      background: linear-gradient(180deg, #242625, #131514);
+      color: var(--text);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: linear-gradient(100deg, #5ce45f, #4ed8e7);
+      color: #00110e;
+    }
+
+    button:disabled {
+      color: #5d6665;
+      border-color: rgba(255, 255, 255, 0.06);
+      cursor: default;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .progress {
+      border: 1px solid rgba(145, 255, 66, 0.16);
+      border-radius: 6px;
+      padding: 12px;
+      background: var(--panel-2);
+    }
+
+    .bar {
+      height: 14px;
+      border-radius: 999px;
+      background: #030504;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #50dff0, #5fe856);
+    }
+
+    .log {
+      flex: 1;
+      min-height: 180px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      background: #020706;
+      color: #d7fff7;
+      padding: 12px;
+      overflow: auto;
+      white-space: pre-wrap;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+
+    aside {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .facts {
+      display: grid;
+      gap: 8px;
+      font-family: Consolas, monospace;
+      color: var(--muted);
+    }
+
+    .fact strong {
+      color: var(--text);
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    .note {
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    footer {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      min-height: 32px;
+      color: var(--green);
+      font-family: Consolas, monospace;
+      font-weight: 700;
+    }
+
+    footer button {
+      min-height: 32px;
+      padding: 0 12px;
+      color: var(--cyan);
+      background: transparent;
+      border-color: var(--line);
+      font-family: Consolas, monospace;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="title">
+        <div class="badge">BT</div>
+        <h1>Brain Trainer</h1>
+      </div>
+      <div id="state" class="status-chip">// planning</div>
+    </header>
+
+    <main>
+      <section class="builder">
+        <h2>// dataset builder</h2>
+
+        <div class="grid">
+          <label for="adapter-name">Adapter name</label>
+          <input id="adapter-name" value="my_project_coder" title="Name for the future dataset, job, and adapter.">
+          <button id="open-sources" type="button" title="Open the Brain Trainer source definition folder.">Open Sources</button>
+        </div>
+
+        <div class="grid">
+          <label for="engine-pack">Engine pack</label>
+          <select id="engine-pack" title="Preset filters and prompts for a game engine or workflow.">
+            <option value="unreal">Unreal C++</option>
+            <option value="unity">Unity C#</option>
+            <option value="godot">Godot</option>
+            <option value="blender">Blender Python</option>
+            <option value="nymphscore">NymphsCore Modules</option>
+          </select>
+          <button id="open-datasets" type="button" title="Open generated Brain Trainer datasets.">Open Datasets</button>
+        </div>
+
+        <div class="actions">
+          <button id="build-dataset" class="primary" type="button" title="Future action: scan sources and build reviewed training examples.">Build Dataset</button>
+          <button id="add-job" type="button" disabled title="Future action: save a trainer job from reviewed examples.">Add Job</button>
+          <button id="start-job" type="button" disabled title="Future action: start a tracked local trainer job.">Start Job</button>
+          <button id="install-brain" type="button" disabled title="Future action: link a finished adapter into Brain.">Install Into Brain</button>
+        </div>
+
+        <div class="progress">
+          <strong>Training progress</strong>
+          <span id="percent" style="float:right;color:var(--cyan);font-weight:800;">0%</span>
+          <div class="bar"><div id="fill" class="fill"></div></div>
+          <div id="progress-text" class="note">Dataset builder is the next milestone.</div>
+        </div>
+
+        <h2>// live log</h2>
+        <pre id="log" class="log">Brain Trainer skeleton loaded.</pre>
+      </section>
+
+      <aside>
+        <h2>// status</h2>
+        <div class="facts">
+          <div class="fact"><strong>Brain:</strong> <span id="brain-state">checking</span></div>
+          <div class="fact"><strong>Model:</strong> <span id="brain-model">-</span></div>
+          <div class="fact"><strong>Datasets:</strong> <span id="dataset-count">0</span></div>
+          <div class="fact"><strong>Jobs:</strong> <span id="job-count">0</span></div>
+          <div class="fact"><strong>Adapters:</strong> <span id="adapter-count">0</span></div>
+        </div>
+        <p class="note">Brain Trainer is scaffolded. The first implementation target is source scanning and reviewed dataset generation.</p>
+        <button id="refresh" type="button">Refresh</button>
+        <button id="open-adapters" type="button">Open Adapters</button>
+      </aside>
+    </main>
+
+    <footer>
+      //
+      <button id="logs" type="button">Logs</button>
+    </footer>
+  </div>
+
+  <script>
+    const log = document.querySelector("#log");
+    const state = document.querySelector("#state");
+    const progressText = document.querySelector("#progress-text");
+    const percent = document.querySelector("#percent");
+    const fill = document.querySelector("#fill");
+    const brainState = document.querySelector("#brain-state");
+    const brainModel = document.querySelector("#brain-model");
+    const datasetCount = document.querySelector("#dataset-count");
+    const jobCount = document.querySelector("#job-count");
+    const adapterCount = document.querySelector("#adapter-count");
+    const pending = new Map();
+    let requestId = 0;
+
+    function parseKeyValues(text) {
+      const values = {};
+      String(text || "").split(/\r?\n/).forEach(line => {
+        const index = line.indexOf("=");
+        if (index > 0) {
+          values[line.slice(0, index)] = line.slice(index + 1);
+        }
+      });
+      return values;
+    }
+
+    function moduleAction(action, args = {}) {
+      if (!window.chrome || !window.chrome.webview) {
+        return Promise.reject(new Error("Module action bridge is unavailable."));
+      }
+
+      const id = `brain-train-${++requestId}`;
+      return new Promise((resolve, reject) => {
+        pending.set(id, { resolve, reject });
+        window.chrome.webview.postMessage({
+          type: "module_action",
+          requestId: id,
+          action,
+          args
+        });
+      });
+    }
+
+    function applyStatus(values) {
+      state.textContent = `// ${values.state || "planning"}`;
+      brainState.textContent = values.brain_installed === "true" ? "installed" : "missing";
+      brainModel.textContent = values.brain_local_model || "-";
+      datasetCount.textContent = values.dataset_count || "0";
+      jobCount.textContent = values.job_count || "0";
+      adapterCount.textContent = values.adapter_count || "0";
+      progressText.textContent = values.active_info || values.detail || "Dataset builder is the next milestone.";
+      percent.textContent = "0%";
+      fill.style.width = "0%";
+    }
+
+    async function refresh() {
+      try {
+        const output = await moduleAction("status");
+        applyStatus(parseKeyValues(output));
+      } catch (error) {
+        log.textContent = error.message || String(error);
+      }
+    }
+
+    async function run(action, args = {}) {
+      try {
+        log.textContent = `Running ${action}...`;
+        const output = await moduleAction(action, args);
+        log.textContent = output || `${action} finished.`;
+        await refresh();
+      } catch (error) {
+        log.textContent = error.message || String(error);
+      }
+    }
+
+    if (window.chrome && window.chrome.webview) {
+      window.chrome.webview.addEventListener("message", event => {
+        const message = event.data || {};
+        if (message.type !== "module_action_result") {
+          return;
+        }
+        const item = pending.get(message.requestId);
+        if (!item) {
+          return;
+        }
+        pending.delete(message.requestId);
+        if (message.ok) {
+          item.resolve(message.output || "");
+        } else {
+          item.reject(new Error(message.error || "Module action failed."));
+        }
+      });
+    }
+
+    document.querySelector("#open-sources").addEventListener("click", () => run("open_sources"));
+    document.querySelector("#open-datasets").addEventListener("click", () => run("open_datasets"));
+    document.querySelector("#open-adapters").addEventListener("click", () => run("open_adapters"));
+    document.querySelector("#build-dataset").addEventListener("click", () => run("build_dataset"));
+    document.querySelector("#refresh").addEventListener("click", refresh);
+    document.querySelector("#logs").addEventListener("click", () => run("logs"));
+
+    refresh();
+  </script>
+</body>
+</html>

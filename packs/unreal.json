@@ -1,0 +1,8 @@
+{
+  "id": "unreal",
+  "label": "Unreal C++",
+  "summary": "Unreal Engine C++ project and plugin conventions.",
+  "include_extensions": [".cpp", ".c", ".h", ".hpp", ".uproject", ".uplugin", ".ini", ".md", ".txt"],
+  "ignore_directories": ["Binaries", "Build", "DerivedDataCache", "Intermediate", "Saved", ".vs"],
+  "system_prompt": "You are a local Unreal Engine coding assistant. Prefer project conventions, explain engine lifecycle details clearly, and avoid inventing APIs."
+}

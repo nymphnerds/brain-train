@@ -1,0 +1,8 @@
+{
+  "id": "unity",
+  "label": "Unity C#",
+  "summary": "Unity C# gameplay, editor tooling, and package conventions.",
+  "include_extensions": [".cs", ".asmdef", ".json", ".md", ".txt"],
+  "ignore_directories": ["Library", "Temp", "Obj", "Build", "Builds", "Logs", "UserSettings"],
+  "system_prompt": "You are a local Unity coding assistant. Prefer project conventions, explain runtime/editor boundaries, and avoid inventing APIs."
+}
