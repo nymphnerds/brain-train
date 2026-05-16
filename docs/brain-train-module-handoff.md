@@ -26,7 +26,7 @@ Suggested install root:
 
 ## Goal
 
-Build a beginner-friendly local LLM adapter trainer for Brain.
+Build a beginner-friendly local LLM adapter training module for Brain.
 
 The product should help a user train a local coding/game-engine assistant from
 their own codebases, docs, project conventions, and engine-specific knowledge.
@@ -37,7 +37,7 @@ The intended end-to-end flow is:
 pick Brain/base model
 -> add source folders and docs
 -> build reviewed instruction dataset
--> add trainer job
+-> add training job
 -> start/stop/delete/poll job
 -> save finished LoRA/QLoRA adapter
 -> install/link adapter into Brain
@@ -70,7 +70,7 @@ Reference runtime folders:
 ```text
 Brain runtime:      /home/nymph/Nymphs-Brain
 LoRA runtime:       /home/nymph/LoRA
-Future trainer:     /home/nymph/brain-train
+Future training root:     /home/nymph/brain-train
 Managed WSL distro: NymphsCore
 ```
 
@@ -196,7 +196,7 @@ brain-train should copy the pattern, not the image-specific behavior.
   .nymph-module-version
   bin/
   venv/
-  trainer/
+  backend/
     axolotl/
   sources/
     my_project.sources.json
@@ -234,9 +234,9 @@ NymphsModules/brain-train/
   README.md
   CHANGELOG.md
   docs/
-    BRAIN_TRAINER_MODULE_HANDOFF.md
-    DATASET_GUIDE.md
-    BRAIN_INTEGRATION_GUIDE.md
+    brain-train-module-handoff.md
+    dataset-guide.md
+    brain-integration-guide.md
   packs/
     unreal.json
     unity.json
@@ -244,23 +244,23 @@ NymphsModules/brain-train/
     blender.json
     nymphscore.json
   scripts/
-    _brain_trainer_common.sh
-    install_brain_trainer.sh
-    brain_trainer_update.sh
-    brain_trainer_status.sh
-    brain_trainer_logs.sh
-    brain_trainer_open_sources.sh
-    brain_trainer_open_datasets.sh
-    brain_trainer_open_adapters.sh
-    brain_trainer_build_dataset.sh
-    brain_trainer_review_dataset.sh
-    brain_trainer_create_job.sh
-    brain_trainer_start_job.sh
-    brain_trainer_stop_job.sh
-    brain_trainer_delete_job.sh
-    brain_trainer_job_status.sh
-    brain_trainer_install_into_brain.sh
-    brain_trainer_uninstall.sh
+    _brain_train_common.sh
+    install_brain_train.sh
+    brain_train_update.sh
+    brain_train_status.sh
+    brain_train_logs.sh
+    brain_train_open_sources.sh
+    brain_train_open_datasets.sh
+    brain_train_open_adapters.sh
+    brain_train_build_dataset.sh
+    brain_train_review_dataset.sh
+    brain_train_create_job.sh
+    brain_train_start_job.sh
+    brain_train_stop_job.sh
+    brain_train_delete_job.sh
+    brain_train_job_status.sh
+    brain_train_install_into_brain.sh
+    brain_train_uninstall.sh
     brain_dataset.py
     brain_job.py
     brain_job_control.py
@@ -277,14 +277,14 @@ Start with a normal installable module manifest:
   "manifest_version": 1,
   "id": "brain-train",
   "name": "brain-train",
-  "short_name": "BT",
+  "short_name": "bt",
   "version": "0.1.0",
-  "description": "Local LoRA/QLoRA trainer for Brain coding and game-development adapters.",
+  "description": "Local LoRA/QLoRA training module for Brain coding and game-development adapters.",
   "category": "training",
   "packaging": "repo",
   "install": {
     "root": "$HOME/brain-train",
-    "entrypoint": "scripts/install_brain_trainer.sh",
+    "entrypoint": "scripts/install_brain_train.sh",
     "version_marker": "$HOME/brain-train/.nymph-module-version",
     "installed_markers": [
       "$HOME/brain-train/.nymph-module-version"
@@ -300,21 +300,21 @@ Start with a normal installable module manifest:
     "logs_root": "$HOME/brain-train/logs"
   },
   "entrypoints": {
-    "install": "scripts/install_brain_trainer.sh",
-    "update": "scripts/brain_trainer_update.sh",
-    "status": "scripts/brain_trainer_status.sh",
-    "open_sources": "scripts/brain_trainer_open_sources.sh",
-    "open_datasets": "scripts/brain_trainer_open_datasets.sh",
-    "open_adapters": "scripts/brain_trainer_open_adapters.sh",
-    "build_dataset": "scripts/brain_trainer_build_dataset.sh",
-    "create_job": "scripts/brain_trainer_create_job.sh",
-    "start_job": "scripts/brain_trainer_start_job.sh",
-    "stop_job": "scripts/brain_trainer_stop_job.sh",
-    "delete_job": "scripts/brain_trainer_delete_job.sh",
-    "job_status": "scripts/brain_trainer_job_status.sh",
-    "install_into_brain": "scripts/brain_trainer_install_into_brain.sh",
-    "logs": "scripts/brain_trainer_logs.sh",
-    "uninstall": "scripts/brain_trainer_uninstall.sh"
+    "install": "scripts/install_brain_train.sh",
+    "update": "scripts/brain_train_update.sh",
+    "status": "scripts/brain_train_status.sh",
+    "open_sources": "scripts/brain_train_open_sources.sh",
+    "open_datasets": "scripts/brain_train_open_datasets.sh",
+    "open_adapters": "scripts/brain_train_open_adapters.sh",
+    "build_dataset": "scripts/brain_train_build_dataset.sh",
+    "create_job": "scripts/brain_train_create_job.sh",
+    "start_job": "scripts/brain_train_start_job.sh",
+    "stop_job": "scripts/brain_train_stop_job.sh",
+    "delete_job": "scripts/brain_train_delete_job.sh",
+    "job_status": "scripts/brain_train_job_status.sh",
+    "install_into_brain": "scripts/brain_train_install_into_brain.sh",
+    "logs": "scripts/brain_train_logs.sh",
+    "uninstall": "scripts/brain_train_uninstall.sh"
   },
   "ui": {
     "sort_order": 35,
@@ -326,9 +326,9 @@ Start with a normal installable module manifest:
     },
     "manager_actions": [
       {
-        "id": "open_trainer",
+        "id": "open_brain_train",
         "label": "brain-train",
-        "entrypoint": "open_trainer",
+        "entrypoint": "open_brain_train",
         "result": "open_module_ui"
       },
       {
@@ -366,7 +366,7 @@ Why:
 - config-driven YAML jobs fit the existing Nymph module pattern
 - LoRA/QLoRA support is mature enough for first local experiments
 - it keeps training behavior behind module-owned scripts
-- it is easier to inspect, save, rerun, and debug than a one-off trainer script
+- it is easier to inspect, save, rerun, and debug than a one-off training script
 
 Possible later backends:
 
@@ -675,12 +675,12 @@ Brain models
 Brain config
 ```
 
-Delete Job should delete only the trainer job config/registration and any
+Delete Job should delete only the training job config/registration and any
 active queued process state.
 
 ## Status Contract
 
-`brain_trainer_status.sh` should be lightweight and marker-first.
+`brain_train_status.sh` should be lightweight and marker-first.
 
 Suggested key/value fields:
 
@@ -710,7 +710,7 @@ logs_dir=/home/nymph/brain-train/logs
 detail=...
 ```
 
-`brain_trainer_job_status.sh` should be the in-place UI polling endpoint and
+`brain_train_job_status.sh` should be the in-place UI polling endpoint and
 can be heavier.
 
 Suggested fields:
@@ -794,7 +794,7 @@ Example adapter metadata:
 ```
 
 Treat adapter loading as a separate Brain integration task. Do not make Brain
-Trainer silently edit `lms-start` until the Brain runtime has a stable adapter
+brain-train silently edit `lms-start` until the Brain runtime has a stable adapter
 loading contract.
 
 ## RAG/Index Pairing
@@ -853,7 +853,7 @@ This can become a Brain MCP tool or Open WebUI/RAG integration later.
 
 ### Milestone 4: Backend Install
 
-- Install Axolotl in isolated trainer venv.
+- Install Axolotl in isolated training venv.
 - Keep model caches under shared/preserved cache paths where sensible.
 - Do not download giant base models during base install.
 - Detect compatible Brain-selected base model if possible.
@@ -869,7 +869,7 @@ This can become a Brain MCP tool or Open WebUI/RAG integration later.
 
 ### Milestone 6: Stop/Delete/Completion
 
-- Stop Job terminates only the active trainer process.
+- Stop Job terminates only the active training process.
 - Delete Job removes job registration/config only.
 - Detect final adapter and write `nymphs_brain_adapter.json`.
 - Do not delete datasets, sources, reviewed examples, adapters, or Brain files.
@@ -917,7 +917,7 @@ Do not:
 
 - Which base local model should be the first supported target?
 - Should v0.1 require GGUF base models, Hugging Face transformer models, or a
-  separate trainer-format base model?
+  separate training-format base model?
 - What is the safest adapter loading path for the current Brain llama-server
   runtime?
 - Should the first training proof use Axolotl directly, or should Unsloth be

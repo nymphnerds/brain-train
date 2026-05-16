@@ -2,9 +2,9 @@
   "manifest_version": 1,
   "id": "brain-train",
   "name": "Brain-Train",
-  "short_name": "BT",
+  "short_name": "bt",
   "version": "0.1.0",
-  "description": "Local LoRA/QLoRA trainer for Brain coding and game-development adapters.",
+  "description": "Local LoRA/QLoRA training module for Brain coding and game-development adapters.",
   "category": "training",
   "packaging": "repo",
   "repo": {
@@ -17,7 +17,7 @@
     "ref": "main"
   },
   "overview": {
-    "body": "brain-train is the planned local LLM adapter trainer for Brain. It will turn selected codebases, docs, and game-engine project material into reviewed datasets, train LoRA/QLoRA adapters, and link finished adapters back into Brain.\n\nThe first milestone is dataset building and review. Training backend integration will come after the dataset workflow is proven.",
+    "body": "brain-train is the planned local LLM adapter training module for Brain. It will turn selected codebases, docs, and game-engine project material into reviewed datasets, train LoRA/QLoRA adapters, and link finished adapters back into Brain.\n\nThe first milestone is dataset building and review. Training backend integration will come after the dataset workflow is proven.",
     "works_with": [
       "Nymphs Brain local LLM stack",
       "Game-development codebases",
@@ -42,7 +42,7 @@
   },
   "install": {
     "root": "$HOME/brain-train",
-    "entrypoint": "scripts/install_brain_trainer.sh",
+    "entrypoint": "scripts/install_brain_train.sh",
     "version_marker": "$HOME/brain-train/.nymph-module-version",
     "installed_markers": [
       "$HOME/brain-train/.nymph-module-version"
@@ -59,17 +59,17 @@
     "logs_root": "$HOME/brain-train/logs"
   },
   "entrypoints": {
-    "install": "scripts/install_brain_trainer.sh",
-    "update": "scripts/brain_trainer_update.sh",
-    "status": "scripts/brain_trainer_status.sh",
-    "open_trainer": "scripts/brain_trainer_open.sh",
-    "open_sources": "scripts/brain_trainer_open_sources.sh",
-    "open_datasets": "scripts/brain_trainer_open_datasets.sh",
-    "open_adapters": "scripts/brain_trainer_open_adapters.sh",
-    "build_dataset": "scripts/brain_trainer_build_dataset.sh",
-    "job_status": "scripts/brain_trainer_job_status.sh",
-    "logs": "scripts/brain_trainer_logs.sh",
-    "uninstall": "scripts/brain_trainer_uninstall.sh"
+    "install": "scripts/install_brain_train.sh",
+    "update": "scripts/brain_train_update.sh",
+    "status": "scripts/brain_train_status.sh",
+    "open_brain_train": "scripts/brain_train_open.sh",
+    "open_sources": "scripts/brain_train_open_sources.sh",
+    "open_datasets": "scripts/brain_train_open_datasets.sh",
+    "open_adapters": "scripts/brain_train_open_adapters.sh",
+    "build_dataset": "scripts/brain_train_build_dataset.sh",
+    "job_status": "scripts/brain_train_job_status.sh",
+    "logs": "scripts/brain_train_logs.sh",
+    "uninstall": "scripts/brain_train_uninstall.sh"
   },
   "ui": {
     "sort_order": 35,
@@ -81,9 +81,9 @@
     },
     "manager_actions": [
       {
-        "id": "open_trainer",
+        "id": "open_brain_train",
         "label": "brain-train",
-        "entrypoint": "open_trainer",
+        "entrypoint": "open_brain_train",
         "result": "open_module_ui"
       },
       {
@@ -132,17 +132,17 @@
     "removes_by_default": [
       "bin",
       "venv",
-      "trainer"
+      "backend"
     ]
   },
   "dependencies": {
     "python": "3.x with venv",
     "brain": "Nymphs Brain module for model/runtime integration",
-    "trainer_backend": "Planned: Axolotl first, with Unsloth/TRL candidates later"
+    "training_backend": "Planned: Axolotl first, with Unsloth/TRL candidates later"
   },
   "notes": [
     "brain-train is a future training module skeleton.",
     "The first real milestone is source scanning and reviewed dataset generation.",
-    "Do not commit datasets, generated examples, jobs, adapters, indexes, model files, venvs, logs, secrets, or downloaded trainer backends."
+    "Do not commit datasets, generated examples, jobs, adapters, indexes, model files, venvs, logs, secrets, or downloaded training backends."
   ]
 }

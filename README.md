@@ -18,7 +18,7 @@ The intended long-term flow:
 pick Brain/base model
 -> add source folders and docs
 -> build reviewed instruction dataset
--> add trainer job
+-> add training job
 -> start/stop/delete/poll job
 -> save finished adapter
 -> install/link adapter into Brain
@@ -51,7 +51,7 @@ Generated runtime folders:
 ```text
 ~/brain-train/bin
 ~/brain-train/venv
-~/brain-train/trainer
+~/brain-train/backend
 ~/brain-train/sources
 ~/brain-train/datasets
 ~/brain-train/jobs
@@ -68,10 +68,10 @@ These folders are local runtime state and should not be committed.
 Useful scripts:
 
 ```bash
-scripts/install_brain_trainer.sh
-scripts/brain_trainer_status.sh
-scripts/brain_trainer_logs.sh
-scripts/brain_trainer_uninstall.sh
+scripts/install_brain_train.sh
+scripts/brain_train_status.sh
+scripts/brain_train_logs.sh
+scripts/brain_train_uninstall.sh
 ```
 
 `Logs` follows the Nymph module standard and prints:
