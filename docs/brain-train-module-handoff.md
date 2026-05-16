@@ -276,7 +276,7 @@ Start with a normal installable module manifest:
 {
   "manifest_version": 1,
   "id": "brain-train",
-  "name": "brain-train",
+  "name": "Brain-Train",
   "short_name": "bt",
   "version": "0.1.0",
   "description": "Local LoRA/QLoRA training module for Brain coding and game-development adapters.",
@@ -359,24 +359,51 @@ declared. Do not add brain-train-specific UI code to the Manager.
 
 ## Backend Recommendation
 
-Start with Axolotl as the first backend.
+Research snapshot from 2026-05-16:
+
+Do not use ai toolkit as the first backend for brain-train. It is a good match
+for diffusion image/video LoRA work, but brain-train needs local LLM adapter
+training for Brain.
+
+Use llama-factory for the first proof.
 
 Why:
 
-- config-driven YAML jobs fit the existing Nymph module pattern
-- LoRA/QLoRA support is mature enough for first local experiments
-- it keeps training behavior behind module-owned scripts
-- it is easier to inspect, save, rerun, and debug than a one-off training script
+- it has CLI and WebUI paths, which makes it close to the current module shape
+- it supports LoRA/QLoRA and common local LLM fine-tuning stages
+- it is faster to prove the user flow than building directly on lower-level APIs
+- it can stay behind module-owned scripts, so the Manager contract remains clean
+- it gives brain-train a practical first path before committing to a heavier
+  backend contract
 
-Possible later backends:
+Backend ranking:
 
 ```text
-Unsloth -> low-VRAM consumer GPU mode
-TRL     -> custom advanced workflows
+llama-factory -> first proof / easiest product validation
+axolotl       -> serious config-driven backend after the proof works
+unsloth       -> low-VRAM and speed-focused mode
+trl plus peft -> custom advanced workflows
+torchtune     -> lower-level PyTorch-native path
 ```
 
 Do not support multiple backends in the first milestone. Pick one, prove the
 end-to-end product, then add choices later.
+
+Reference links:
+
+- ai toolkit: https://github.com/ostris/ai-toolkit
+- llama-factory: https://github.com/hiyouga/LLaMA-Factory
+- axolotl: https://docs.axolotl.ai/
+- unsloth: https://docs.unsloth.ai/get-started/fine-tuning-guide
+- trl: https://huggingface.co/docs/trl/main/en/index
+- peft: https://huggingface.co/docs/peft/index
+- torchtune: https://meta-pytorch.org/torchtune/stable/tutorials/lora_finetune.html
+
+Full candidate queue:
+
+```text
+docs/training-backend-research.md
+```
 
 ## Beginner UI Flow
 
@@ -656,9 +683,9 @@ form values
 -> install/link into Brain
 ```
 
-Unlike image LoRA, Axolotl may not provide the same UI/API queue as AI Toolkit.
-That is okay. brain-train can own a local job registry and process runner, as
-long as the user-facing flow remains:
+Unlike image LoRA, LLM training backends may not provide the same UI/API queue
+as ai toolkit. That is okay. brain-train can own a local job registry and
+process runner, as long as the user-facing flow remains:
 
 ```text
 Add Job -> Start Job -> Stop Job -> Delete Job -> Refresh
@@ -853,14 +880,14 @@ This can become a Brain MCP tool or Open WebUI/RAG integration later.
 
 ### Milestone 4: Backend Install
 
-- Install Axolotl in isolated training venv.
+- Install llama-factory in isolated training venv for the first proof.
 - Keep model caches under shared/preserved cache paths where sensible.
 - Do not download giant base models during base install.
 - Detect compatible Brain-selected base model if possible.
 
 ### Milestone 5: Add Job / Start Job
 
-- Generate Axolotl YAML from form values and dataset path.
+- Generate backend config from form values and dataset path.
 - Save job metadata JSON.
 - Add Job only registers/saves the job.
 - Start Job starts a tracked local process.
@@ -920,8 +947,8 @@ Do not:
   separate training-format base model?
 - What is the safest adapter loading path for the current Brain llama-server
   runtime?
-- Should the first training proof use Axolotl directly, or should Unsloth be
-  the first backend for lower VRAM?
+- After the llama-factory proof, should axolotl become the serious default
+  backend, or should unsloth become the low-VRAM default first?
 - Should RAG/index be part of v0.1, or documented as v0.2 after adapter proof?
 - Should dataset examples be generated locally by Brain, remotely through the
   Brain llm-wrapper, or initially template-only?

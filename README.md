@@ -38,6 +38,31 @@ This is an initial module skeleton. It provides:
 Training backend integration is not implemented yet. The first real milestone
 is the dataset builder, not model training.
 
+## Backend Direction
+
+Research snapshot from 2026-05-16:
+
+- do not use ai toolkit for this module; it is aimed at diffusion image/video
+  LoRA workflows, not local LLM adapter work for Brain
+- use llama-factory for the first local proof because it has CLI and WebUI
+  paths, supports LoRA/QLoRA, and is closer to the simple module workflow
+- keep axolotl as the stronger config-driven backend candidate after the first
+  proof works
+- keep unsloth as the low-VRAM/speed path to test after the core workflow is
+  stable
+- keep the full candidate list in
+  `docs/training-backend-research.md` so every option can be researched
+
+Reference links:
+
+- https://github.com/ostris/ai-toolkit
+- https://github.com/hiyouga/LLaMA-Factory
+- https://docs.axolotl.ai/
+- https://docs.unsloth.ai/get-started/fine-tuning-guide
+- https://huggingface.co/docs/trl/main/en/index
+- https://huggingface.co/docs/peft/index
+- https://meta-pytorch.org/torchtune/stable/tutorials/lora_finetune.html
+
 ## Runtime Layout
 
 Installed runtime path:

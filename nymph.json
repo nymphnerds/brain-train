@@ -138,7 +138,7 @@
   "dependencies": {
     "python": "3.x with venv",
     "brain": "Nymphs Brain module for model/runtime integration",
-    "training_backend": "Planned: Axolotl first, with Unsloth/TRL candidates later"
+    "training_backend": "Planned: llama-factory first proof, with axolotl, unsloth, trl plus peft, and torchtune candidates later"
   },
   "notes": [
     "brain-train is a future training module skeleton.",
