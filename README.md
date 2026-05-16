@@ -1,6 +1,6 @@
-# Brain Trainer
+# brain-train
 
-Brain Trainer is the planned NymphsCore module for building local coding and
+brain-train is the planned NymphsCore module for building local coding and
 game-development LoRA/QLoRA adapters for Brain.
 
 This repo is intentionally the clean module source. It is not a dump of a live
@@ -43,22 +43,22 @@ is the dataset builder, not model training.
 Installed runtime path:
 
 ```text
-~/Brain-Trainer
+~/brain-train
 ```
 
 Generated runtime folders:
 
 ```text
-~/Brain-Trainer/bin
-~/Brain-Trainer/venv
-~/Brain-Trainer/trainer
-~/Brain-Trainer/sources
-~/Brain-Trainer/datasets
-~/Brain-Trainer/jobs
-~/Brain-Trainer/adapters
-~/Brain-Trainer/indexes
-~/Brain-Trainer/config
-~/Brain-Trainer/logs
+~/brain-train/bin
+~/brain-train/venv
+~/brain-train/trainer
+~/brain-train/sources
+~/brain-train/datasets
+~/brain-train/jobs
+~/brain-train/adapters
+~/brain-train/indexes
+~/brain-train/config
+~/brain-train/logs
 ```
 
 These folders are local runtime state and should not be committed.
@@ -77,7 +77,7 @@ scripts/brain_trainer_uninstall.sh
 `Logs` follows the Nymph module standard and prints:
 
 ```text
-last_log=/home/nymph/Brain-Trainer/logs/brain-train.log
+last_log=/home/nymph/brain-train/logs/brain-train.log
 ```
 
 ## Repo Rule

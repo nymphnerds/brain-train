@@ -28,7 +28,7 @@ if [[ -f "${marker}" ]]; then
   [[ -n "${version}" ]] || version=unknown
   state=installed
   health=ok
-  detail="Brain Trainer installed. Dataset builder is the next milestone."
+  detail="brain-train installed. Dataset builder is the next milestone."
 fi
 
 if [[ -d "${BRAIN_TRAINER_DATASET_DIR}" ]]; then
@@ -83,12 +83,12 @@ fi
 if [[ "${installed}" == "true" && "${brain_installed}" == "false" ]]; then
   state=needs_brain
   health=degraded
-  detail="Brain Trainer is installed, but Brain is not installed yet."
+  detail="brain-train is installed, but Brain is not installed yet."
 fi
 
 cat <<EOF
 id=brain-train
-name=Brain Trainer
+name=brain-train
 installed=${installed}
 runtime_present=${runtime_present}
 data_present=${data_present}
@@ -106,7 +106,7 @@ dataset_count=${dataset_count}
 job_count=${job_count}
 adapter_count=${adapter_count}
 active_state=idle
-active_info=No Brain Trainer job runner implemented yet.
+active_info=No brain-train job runner implemented yet.
 install_root=${BRAIN_TRAINER_INSTALL_ROOT}
 sources=${BRAIN_TRAINER_SOURCE_DIR}
 datasets=${BRAIN_TRAINER_DATASET_DIR}

@@ -17,6 +17,6 @@ install -m 644 "${MODULE_ROOT}"/ui/*.html "${BRAIN_TRAINER_INSTALL_ROOT}/ui/"
 install -m 644 "${MODULE_ROOT}"/packs/*.json "${BRAIN_TRAINER_INSTALL_ROOT}/packs/"
 printf '%s\n' "${BRAIN_TRAINER_VERSION}" > "$(brain_trainer_marker)"
 
-echo "Brain Trainer module files updated."
+echo "brain-train module files updated."
 echo "install_root=${BRAIN_TRAINER_INSTALL_ROOT}"
 echo "version=${BRAIN_TRAINER_VERSION}"

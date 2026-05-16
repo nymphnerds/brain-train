@@ -1,7 +1,7 @@
 {
   "manifest_version": 1,
   "id": "brain-train",
-  "name": "Brain Trainer",
+  "name": "Brain-Train",
   "short_name": "BT",
   "version": "0.1.0",
   "description": "Local LoRA/QLoRA trainer for Brain coding and game-development adapters.",
@@ -17,7 +17,7 @@
     "ref": "main"
   },
   "overview": {
-    "body": "Brain Trainer is the planned local LLM adapter trainer for Brain. It will turn selected codebases, docs, and game-engine project material into reviewed datasets, train LoRA/QLoRA adapters, and link finished adapters back into Brain.\n\nThe first milestone is dataset building and review. Training backend integration will come after the dataset workflow is proven.",
+    "body": "brain-train is the planned local LLM adapter trainer for Brain. It will turn selected codebases, docs, and game-engine project material into reviewed datasets, train LoRA/QLoRA adapters, and link finished adapters back into Brain.\n\nThe first milestone is dataset building and review. Training backend integration will come after the dataset workflow is proven.",
     "works_with": [
       "Nymphs Brain local LLM stack",
       "Game-development codebases",
@@ -41,22 +41,22 @@
     ]
   },
   "install": {
-    "root": "$HOME/Brain-Trainer",
+    "root": "$HOME/brain-train",
     "entrypoint": "scripts/install_brain_trainer.sh",
-    "version_marker": "$HOME/Brain-Trainer/.nymph-module-version",
+    "version_marker": "$HOME/brain-train/.nymph-module-version",
     "installed_markers": [
-      "$HOME/Brain-Trainer/.nymph-module-version"
+      "$HOME/brain-train/.nymph-module-version"
     ]
   },
   "artifacts": {
-    "install_root": "$HOME/Brain-Trainer",
-    "sources_root": "$HOME/Brain-Trainer/sources",
-    "datasets_root": "$HOME/Brain-Trainer/datasets",
-    "jobs_root": "$HOME/Brain-Trainer/jobs",
-    "adapters_root": "$HOME/Brain-Trainer/adapters",
-    "indexes_root": "$HOME/Brain-Trainer/indexes",
-    "config_root": "$HOME/Brain-Trainer/config",
-    "logs_root": "$HOME/Brain-Trainer/logs"
+    "install_root": "$HOME/brain-train",
+    "sources_root": "$HOME/brain-train/sources",
+    "datasets_root": "$HOME/brain-train/datasets",
+    "jobs_root": "$HOME/brain-train/jobs",
+    "adapters_root": "$HOME/brain-train/adapters",
+    "indexes_root": "$HOME/brain-train/indexes",
+    "config_root": "$HOME/brain-train/config",
+    "logs_root": "$HOME/brain-train/logs"
   },
   "entrypoints": {
     "install": "scripts/install_brain_trainer.sh",
@@ -76,13 +76,13 @@
     "standard_lifecycle_rail": true,
     "manager_ui": {
       "type": "local_html",
-      "title": "Brain Trainer",
+      "title": "brain-train",
       "entrypoint": "ui/manager.html"
     },
     "manager_actions": [
       {
         "id": "open_trainer",
-        "label": "Brain Trainer",
+        "label": "brain-train",
         "entrypoint": "open_trainer",
         "result": "open_module_ui"
       },
@@ -141,7 +141,7 @@
     "trainer_backend": "Planned: Axolotl first, with Unsloth/TRL candidates later"
   },
   "notes": [
-    "Brain Trainer is a future training module skeleton.",
+    "brain-train is a future training module skeleton.",
     "The first real milestone is source scanning and reviewed dataset generation.",
     "Do not commit datasets, generated examples, jobs, adapters, indexes, model files, venvs, logs, secrets, or downloaded trainer backends."
   ]

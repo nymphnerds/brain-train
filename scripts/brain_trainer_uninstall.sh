@@ -22,7 +22,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-echo "Brain Trainer uninstall plan"
+echo "brain-train uninstall plan"
 echo "install_root=${BRAIN_TRAINER_INSTALL_ROOT}"
 
 if [[ "${DATA_ONLY}" == "true" ]]; then
@@ -67,4 +67,4 @@ for target in "${targets[@]}"; do
   rm -rf "${target}"
 done
 
-echo "Brain Trainer uninstall complete."
+echo "brain-train uninstall complete."

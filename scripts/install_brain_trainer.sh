@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/_brain_trainer_common.sh"
 
-echo "Brain Trainer: preparing module runtime."
+echo "brain-train: preparing module runtime."
 brain_trainer_init_dirs
 
 if ! command -v python3 >/dev/null 2>&1; then
@@ -14,7 +14,7 @@ if ! command -v python3 >/dev/null 2>&1; then
 fi
 
 if [[ ! -x "${BRAIN_TRAINER_VENV_DIR}/bin/python" ]]; then
-  echo "Creating Brain Trainer venv at ${BRAIN_TRAINER_VENV_DIR}..."
+  echo "Creating brain-train venv at ${BRAIN_TRAINER_VENV_DIR}..."
   python3 -m venv "${BRAIN_TRAINER_VENV_DIR}"
 fi
 
@@ -27,11 +27,11 @@ install -m 644 "${MODULE_ROOT}"/packs/*.json "${BRAIN_TRAINER_INSTALL_ROOT}/pack
 printf '%s\n' "${BRAIN_TRAINER_VERSION}" > "$(brain_trainer_marker)"
 
 {
-  printf '[%s] Brain Trainer installed at %s\n' "$(date -Is)" "${BRAIN_TRAINER_INSTALL_ROOT}"
+  printf '[%s] brain-train installed at %s\n' "$(date -Is)" "${BRAIN_TRAINER_INSTALL_ROOT}"
   printf '[%s] Dataset builder is the next implementation milestone.\n' "$(date -Is)"
 } >> "${BRAIN_TRAINER_LOG_FILE}"
 
-echo "Brain Trainer installed."
+echo "brain-train installed."
 echo "install_root=${BRAIN_TRAINER_INSTALL_ROOT}"
 echo "version=${BRAIN_TRAINER_VERSION}"
 echo "next_step=Build the dataset workflow before adding training backend support."

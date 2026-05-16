@@ -1,6 +1,6 @@
-# Brain Trainer Dataset Guide
+# brain-train Dataset Guide
 
-Brain Trainer's first real milestone is dataset generation and review.
+brain-train's first real milestone is dataset generation and review.
 
 The dataset builder should turn selected source folders into small, auditable
 instruction examples before any model training happens.
