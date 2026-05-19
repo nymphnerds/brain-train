@@ -17,7 +17,7 @@ job_count=0
 adapter_count=0
 version=not-installed
 state=available
-health=missing
+health=unavailable
 detail="Not installed."
 marker="$(brain_train_marker)"
 
@@ -49,20 +49,21 @@ if [[ "${dataset_count}" != "0" || "${job_count}" != "0" || "${adapter_count}" !
   data_present=true
 fi
 
-if [[ -f "${brain_install_root}/.nymph-module-version" ]]; then
-  brain_installed=true
-fi
-
-if [[ -f "${brain_install_root}/bin/lms-start" ]]; then
-  configured_model="$(sed -n 's/^MODEL_KEY="\([^"]*\)".*/\1/p' "${brain_install_root}/bin/lms-start" | head -n 1)"
-  if [[ -n "${configured_model}" && "${configured_model}" != "none" ]]; then
-    brain_model_configured=true
-    brain_local_model="${configured_model}"
+if [[ "${installed}" == "true" ]]; then
+  if [[ -f "${brain_install_root}/.nymph-module-version" ]]; then
+    brain_installed=true
   fi
-fi
 
-if [[ "${brain_installed}" == "true" ]] &&
-   loaded_model="$(brain_train_probe_url "http://127.0.0.1:8000/v1/models" 2>/dev/null | python3 -c '
+  if [[ -f "${brain_install_root}/bin/lms-start" ]]; then
+    configured_model="$(sed -n 's/^MODEL_KEY="\([^"]*\)".*/\1/p' "${brain_install_root}/bin/lms-start" | head -n 1)"
+    if [[ -n "${configured_model}" && "${configured_model}" != "none" ]]; then
+      brain_model_configured=true
+      brain_local_model="${configured_model}"
+    fi
+  fi
+
+  if [[ "${brain_installed}" == "true" ]] &&
+     loaded_model="$(brain_train_probe_url "http://127.0.0.1:8000/v1/models" 2>/dev/null | python3 -c '
 import json, sys
 try:
     data = json.load(sys.stdin)
@@ -74,9 +75,10 @@ if isinstance(models, list) and models:
     if isinstance(first, dict):
         print(first.get("id") or first.get("name") or first.get("model") or "")
 ')"; then
-  if [[ -n "${loaded_model}" ]]; then
-    brain_llm_running=true
-    brain_local_model="${loaded_model}"
+    if [[ -n "${loaded_model}" ]]; then
+      brain_llm_running=true
+      brain_local_model="${loaded_model}"
+    fi
   fi
 fi
 
