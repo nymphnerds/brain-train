@@ -3,7 +3,7 @@
   "id": "brain-train",
   "name": "Brain-Train",
   "short_name": "bt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local LoRA/QLoRA training module for Brain coding and game-development adapters.",
   "category": "training",
   "packaging": "repo",
